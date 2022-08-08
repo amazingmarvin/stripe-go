@@ -136,6 +136,12 @@ type PaymentIntentConfirmParams struct {
 	UseStripeSDK         *bool                                    `form:"use_stripe_sdk"`
 }
 
+// When enabled, this PaymentIntent will accept payment methods that you have enabled in the Dashboard and are compatible with this PaymentIntent's other parameters.
+type PaymentIntentAutomaticPaymentMethodsParams struct {
+	// Whether this feature is enabled.
+	Enabled *bool `form:"enabled"`
+}
+
 // PaymentIntentMandateDataCustomerAcceptanceOfflineParams is the set of parameters for the customer
 // acceptance of an offline mandate.
 type PaymentIntentMandateDataCustomerAcceptanceOfflineParams struct {
@@ -201,30 +207,31 @@ type PaymentIntentTransferDataParams struct {
 // PaymentIntentParams is the set of parameters that can be used when handling a payment intent.
 type PaymentIntentParams struct {
 	Params                    `form:"*"`
-	Amount                    *int64                                   `form:"amount"`
-	ApplicationFeeAmount      *int64                                   `form:"application_fee_amount"`
-	CaptureMethod             *string                                  `form:"capture_method"`
-	Confirm                   *bool                                    `form:"confirm"`
-	ConfirmationMethod        *string                                  `form:"confirmation_method"`
-	Currency                  *string                                  `form:"currency"`
-	Customer                  *string                                  `form:"customer"`
-	Description               *string                                  `form:"description"`
-	Mandate                   *string                                  `form:"mandate"`
-	MandateData               *PaymentIntentMandateDataParams          `form:"mandate_data"`
-	OnBehalfOf                *string                                  `form:"on_behalf_of"`
-	PaymentMethod             *string                                  `form:"payment_method"`
-	PaymentMethodOptions      *PaymentIntentPaymentMethodOptionsParams `form:"payment_method_options"`
-	PaymentMethodTypes        []*string                                `form:"payment_method_types"`
-	ReceiptEmail              *string                                  `form:"receipt_email"`
-	ReturnURL                 *string                                  `form:"return_url"`
-	SavePaymentMethod         *bool                                    `form:"save_payment_method"`
-	SetupFutureUsage          *string                                  `form:"setup_future_usage"`
-	Shipping                  *ShippingDetailsParams                   `form:"shipping"`
-	Source                    *string                                  `form:"source"`
-	StatementDescriptor       *string                                  `form:"statement_descriptor"`
-	StatementDescriptorSuffix *string                                  `form:"statement_descriptor_suffix"`
-	TransferData              *PaymentIntentTransferDataParams         `form:"transfer_data"`
-	TransferGroup             *string                                  `form:"transfer_group"`
+	Amount                    *int64                                      `form:"amount"`
+	ApplicationFeeAmount      *int64                                      `form:"application_fee_amount"`
+	AutomaticPaymentMethods   *PaymentIntentAutomaticPaymentMethodsParams `form:"automatic_payment_methods"`
+	CaptureMethod             *string                                     `form:"capture_method"`
+	Confirm                   *bool                                       `form:"confirm"`
+	ConfirmationMethod        *string                                     `form:"confirmation_method"`
+	Currency                  *string                                     `form:"currency"`
+	Customer                  *string                                     `form:"customer"`
+	Description               *string                                     `form:"description"`
+	Mandate                   *string                                     `form:"mandate"`
+	MandateData               *PaymentIntentMandateDataParams             `form:"mandate_data"`
+	OnBehalfOf                *string                                     `form:"on_behalf_of"`
+	PaymentMethod             *string                                     `form:"payment_method"`
+	PaymentMethodOptions      *PaymentIntentPaymentMethodOptionsParams    `form:"payment_method_options"`
+	PaymentMethodTypes        []*string                                   `form:"payment_method_types"`
+	ReceiptEmail              *string                                     `form:"receipt_email"`
+	ReturnURL                 *string                                     `form:"return_url"`
+	SavePaymentMethod         *bool                                       `form:"save_payment_method"`
+	SetupFutureUsage          *string                                     `form:"setup_future_usage"`
+	Shipping                  *ShippingDetailsParams                      `form:"shipping"`
+	Source                    *string                                     `form:"source"`
+	StatementDescriptor       *string                                     `form:"statement_descriptor"`
+	StatementDescriptorSuffix *string                                     `form:"statement_descriptor_suffix"`
+	TransferData              *PaymentIntentTransferDataParams            `form:"transfer_data"`
+	TransferGroup             *string                                     `form:"transfer_group"`
 
 	// Those parameters only works if you confirm on creation.
 	OffSession   *bool `form:"off_session"`
