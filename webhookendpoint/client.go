@@ -4,8 +4,8 @@ package webhookendpoint
 import (
 	"net/http"
 
-	stripe "github.com/stripe/stripe-go"
-	"github.com/stripe/stripe-go/form"
+	stripe "github.com/amazingmarvin/stripe-go"
+	"github.com/amazingmarvin/stripe-go/form"
 )
 
 // Client is used to invoke /webhook_endpoints APIs.

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stripe/stripe-go"
+	"github.com/amazingmarvin/stripe-go"
 )
 
 //
