@@ -39,12 +39,28 @@ const (
 // CheckoutSessionLineItemParams is the set of parameters allowed for a line item
 // on a checkout session.
 type CheckoutSessionLineItemParams struct {
-	Amount      *int64    `form:"amount"`
-	Currency    *string   `form:"currency"`
-	Description *string   `form:"description"`
-	Images      []*string `form:"images"`
-	Name        *string   `form:"name"`
-	Quantity    *int64    `form:"quantity"`
+	// When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+	AdjustableQuantity *CheckoutSessionLineItemAdjustableQuantityParams `form:"adjustable_quantity"`
+	// [Deprecated] The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
+	Amount *int64 `form:"amount"`
+	// [Deprecated] Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
+	Currency *string `form:"currency"`
+	// [Deprecated] The description for the line item, to be displayed on the Checkout page.
+	Description *string `form:"description"`
+	// The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
+	DynamicTaxRates []*string `form:"dynamic_tax_rates"`
+	// [Deprecated] A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
+	Images []*string `form:"images"`
+	// [Deprecated] The name for the item to be displayed on the Checkout page. Required if `amount` is passed.
+	Name *string `form:"name"`
+	// The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
+	Price *string `form:"price"`
+	// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+	PriceData *CheckoutSessionLineItemPriceDataParams `form:"price_data"`
+	// The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
+	Quantity *int64 `form:"quantity"`
+	// The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+	TaxRates []*string `form:"tax_rates"`
 }
 
 // CheckoutSessionPaymentIntentDataTransferDataParams is the set of parameters allowed for the
