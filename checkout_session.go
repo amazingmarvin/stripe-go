@@ -40,7 +40,7 @@ const (
 // on a checkout session.
 type CheckoutSessionLineItemParams struct {
 	// When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
-	AdjustableQuantity *CheckoutSessionLineItemAdjustableQuantityParams `form:"adjustable_quantity"`
+	//AdjustableQuantity *CheckoutSessionLineItemAdjustableQuantityParams `form:"adjustable_quantity"`
 	// [Deprecated] The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
 	Amount *int64 `form:"amount"`
 	// [Deprecated] Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
@@ -56,11 +56,19 @@ type CheckoutSessionLineItemParams struct {
 	// The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
 	Price *string `form:"price"`
 	// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
-	PriceData *CheckoutSessionLineItemPriceDataParams `form:"price_data"`
+	//PriceData *CheckoutSessionLineItemPriceDataParams `form:"price_data"`
 	// The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
 	Quantity *int64 `form:"quantity"`
 	// The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
 	TaxRates []*string `form:"tax_rates"`
+}
+
+// The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
+type CheckoutSessionDiscountParams struct {
+	// The ID of the coupon to apply to this Session.
+	Coupon *string `form:"coupon"`
+	// The ID of a promotion code to apply to this Session.
+	PromotionCode *string `form:"promotion_code"`
 }
 
 // CheckoutSessionPaymentIntentDataTransferDataParams is the set of parameters allowed for the
@@ -115,20 +123,22 @@ type CheckoutSessionSubscriptionDataParams struct {
 // For more details see https://stripe.com/docs/api/checkout/sessions/create
 type CheckoutSessionParams struct {
 	Params                   `form:"*"`
-	BillingAddressCollection *string                                 `form:"billing_address_collection"`
-	CancelURL                *string                                 `form:"cancel_url"`
-	ClientReferenceID        *string                                 `form:"client_reference_id"`
-	Customer                 *string                                 `form:"customer"`
-	CustomerEmail            *string                                 `form:"customer_email"`
-	LineItems                []*CheckoutSessionLineItemParams        `form:"line_items"`
-	Locale                   *string                                 `form:"locale"`
-	Mode                     *string                                 `form:"mode"`
-	PaymentIntentData        *CheckoutSessionPaymentIntentDataParams `form:"payment_intent_data"`
-	PaymentMethodTypes       []*string                               `form:"payment_method_types"`
-	SetupIntentData          *CheckoutSessionSetupIntentDataParams   `form:"setup_intent_data"`
-	SubscriptionData         *CheckoutSessionSubscriptionDataParams  `form:"subscription_data"`
-	SubmitType               *string                                 `form:"submit_type"`
-	SuccessURL               *string                                 `form:"success_url"`
+	BillingAddressCollection *string `form:"billing_address_collection"`
+	CancelURL                *string `form:"cancel_url"`
+	ClientReferenceID        *string `form:"client_reference_id"`
+	Customer                 *string `form:"customer"`
+	CustomerEmail            *string `form:"customer_email"`
+	// The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
+	Discounts          []*CheckoutSessionDiscountParams        `form:"discounts"`
+	LineItems          []*CheckoutSessionLineItemParams        `form:"line_items"`
+	Locale             *string                                 `form:"locale"`
+	Mode               *string                                 `form:"mode"`
+	PaymentIntentData  *CheckoutSessionPaymentIntentDataParams `form:"payment_intent_data"`
+	PaymentMethodTypes []*string                               `form:"payment_method_types"`
+	SetupIntentData    *CheckoutSessionSetupIntentDataParams   `form:"setup_intent_data"`
+	SubscriptionData   *CheckoutSessionSubscriptionDataParams  `form:"subscription_data"`
+	SubmitType         *string                                 `form:"submit_type"`
+	SuccessURL         *string                                 `form:"success_url"`
 }
 
 // CheckoutSessionDisplayItemCustom represents an item of type custom in a checkout session
